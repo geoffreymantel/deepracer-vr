@@ -8,9 +8,9 @@ using Unity.Robotics.ROSTCPConnector.MessageGeneration;
 namespace RosMessageTypes.DeepracerInterfacesPkg
 {
     [Serializable]
-    public class EvoSensorMsg : Message
+    public class EvoSensorMsgMsg : Message
     {
-        public const string k_RosMessageName = "deepracer_interfaces_pkg/EvoSensor";
+        public const string k_RosMessageName = "deepracer_interfaces_pkg/EvoSensorMsg";
         public override string RosMessageName => k_RosMessageName;
 
         //  Custom message to combine different sensor messages.
@@ -23,21 +23,21 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
         public float[] lidar_data;
         //  LiDAR distance data read from LiDAR sensor.
 
-        public EvoSensorMsg()
+        public EvoSensorMsgMsg()
         {
             this.images = new Sensor.ImageMsg[0];
             this.lidar_data = new float[0];
         }
 
-        public EvoSensorMsg(Sensor.ImageMsg[] images, float[] lidar_data)
+        public EvoSensorMsgMsg(Sensor.ImageMsg[] images, float[] lidar_data)
         {
             this.images = images;
             this.lidar_data = lidar_data;
         }
 
-        public static EvoSensorMsg Deserialize(MessageDeserializer deserializer) => new EvoSensorMsg(deserializer);
+        public static EvoSensorMsgMsg Deserialize(MessageDeserializer deserializer) => new EvoSensorMsgMsg(deserializer);
 
-        private EvoSensorMsg(MessageDeserializer deserializer)
+        private EvoSensorMsgMsg(MessageDeserializer deserializer)
         {
             deserializer.Read(out this.images, Sensor.ImageMsg.Deserialize, deserializer.ReadLength());
             deserializer.Read(out this.lidar_data, sizeof(float), deserializer.ReadLength());
@@ -53,7 +53,7 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
 
         public override string ToString()
         {
-            return "EvoSensorMsg: " +
+            return "EvoSensorMsgMsg: " +
             "\nimages: " + System.String.Join(", ", images.ToList()) +
             "\nlidar_data: " + System.String.Join(", ", lidar_data.ToList());
         }

@@ -8,9 +8,9 @@ using Unity.Robotics.ROSTCPConnector.MessageGeneration;
 namespace RosMessageTypes.DeepracerInterfacesPkg
 {
     [Serializable]
-    public class USBFileSystemNotificationMsg : Message
+    public class USBFileSystemNotificationMsgMsg : Message
     {
-        public const string k_RosMessageName = "deepracer_interfaces_pkg/USBFileSystemNotification";
+        public const string k_RosMessageName = "deepracer_interfaces_pkg/USBFileSystemNotificationMsg";
         public override string RosMessageName => k_RosMessageName;
 
         //  Custom message with the details of file/folder found in the USB drive
@@ -30,7 +30,7 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
         //  Node name to manage dereferencing the mount point
         //  after the processing of the file/folder is completed.
 
-        public USBFileSystemNotificationMsg()
+        public USBFileSystemNotificationMsgMsg()
         {
             this.path = "";
             this.file_name = "";
@@ -38,7 +38,7 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
             this.node_name = "";
         }
 
-        public USBFileSystemNotificationMsg(string path, string file_name, string callback_name, string node_name)
+        public USBFileSystemNotificationMsgMsg(string path, string file_name, string callback_name, string node_name)
         {
             this.path = path;
             this.file_name = file_name;
@@ -46,9 +46,9 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
             this.node_name = node_name;
         }
 
-        public static USBFileSystemNotificationMsg Deserialize(MessageDeserializer deserializer) => new USBFileSystemNotificationMsg(deserializer);
+        public static USBFileSystemNotificationMsgMsg Deserialize(MessageDeserializer deserializer) => new USBFileSystemNotificationMsgMsg(deserializer);
 
-        private USBFileSystemNotificationMsg(MessageDeserializer deserializer)
+        private USBFileSystemNotificationMsgMsg(MessageDeserializer deserializer)
         {
             deserializer.Read(out this.path);
             deserializer.Read(out this.file_name);
@@ -66,7 +66,7 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
 
         public override string ToString()
         {
-            return "USBFileSystemNotificationMsg: " +
+            return "USBFileSystemNotificationMsgMsg: " +
             "\npath: " + path.ToString() +
             "\nfile_name: " + file_name.ToString() +
             "\ncallback_name: " + callback_name.ToString() +
