@@ -8,9 +8,9 @@ using Unity.Robotics.ROSTCPConnector.MessageGeneration;
 namespace RosMessageTypes.DeepracerInterfacesPkg
 {
     [Serializable]
-    public class ServoCtrlMsgMsg : Message
+    public class ServoCtrlMsg : Message
     {
-        public const string k_RosMessageName = "deepracer_interfaces_pkg/ServoCtrlMsg";
+        public const string k_RosMessageName = "deepracer_interfaces_pkg/ServoCtrl";
         public override string RosMessageName => k_RosMessageName;
 
         //  Custom message with throttle and steering angle values.
@@ -27,21 +27,21 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
         //  in calibration file or raw PWM value to be sent
         //  to the motor.   
 
-        public ServoCtrlMsgMsg()
+        public ServoCtrlMsg()
         {
             this.angle = 0.0f;
             this.throttle = 0.0f;
         }
 
-        public ServoCtrlMsgMsg(float angle, float throttle)
+        public ServoCtrlMsg(float angle, float throttle)
         {
             this.angle = angle;
             this.throttle = throttle;
         }
 
-        public static ServoCtrlMsgMsg Deserialize(MessageDeserializer deserializer) => new ServoCtrlMsgMsg(deserializer);
+        public static ServoCtrlMsg Deserialize(MessageDeserializer deserializer) => new ServoCtrlMsg(deserializer);
 
-        private ServoCtrlMsgMsg(MessageDeserializer deserializer)
+        private ServoCtrlMsg(MessageDeserializer deserializer)
         {
             deserializer.Read(out this.angle);
             deserializer.Read(out this.throttle);
@@ -55,7 +55,7 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
 
         public override string ToString()
         {
-            return "ServoCtrlMsgMsg: " +
+            return "ServoCtrlMsg: " +
             "\nangle: " + angle.ToString() +
             "\nthrottle: " + throttle.ToString();
         }

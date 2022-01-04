@@ -8,9 +8,9 @@ using Unity.Robotics.ROSTCPConnector.MessageGeneration;
 namespace RosMessageTypes.DeepracerInterfacesPkg
 {
     [Serializable]
-    public class SoftwareUpdatePctMsgMsg : Message
+    public class SoftwareUpdatePctMsg : Message
     {
-        public const string k_RosMessageName = "deepracer_interfaces_pkg/SoftwareUpdatePctMsg";
+        public const string k_RosMessageName = "deepracer_interfaces_pkg/SoftwareUpdatePct";
         public override string RosMessageName => k_RosMessageName;
 
         //  Custom message with software update progress details.
@@ -24,21 +24,21 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
         //  Value indicating the stage of the update process.
         //  Ex: checking, downloading, installing, etc,.
 
-        public SoftwareUpdatePctMsgMsg()
+        public SoftwareUpdatePctMsg()
         {
             this.update_pct = 0.0f;
             this.status = "";
         }
 
-        public SoftwareUpdatePctMsgMsg(float update_pct, string status)
+        public SoftwareUpdatePctMsg(float update_pct, string status)
         {
             this.update_pct = update_pct;
             this.status = status;
         }
 
-        public static SoftwareUpdatePctMsgMsg Deserialize(MessageDeserializer deserializer) => new SoftwareUpdatePctMsgMsg(deserializer);
+        public static SoftwareUpdatePctMsg Deserialize(MessageDeserializer deserializer) => new SoftwareUpdatePctMsg(deserializer);
 
-        private SoftwareUpdatePctMsgMsg(MessageDeserializer deserializer)
+        private SoftwareUpdatePctMsg(MessageDeserializer deserializer)
         {
             deserializer.Read(out this.update_pct);
             deserializer.Read(out this.status);
@@ -52,7 +52,7 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
 
         public override string ToString()
         {
-            return "SoftwareUpdatePctMsgMsg: " +
+            return "SoftwareUpdatePctMsg: " +
             "\nupdate_pct: " + update_pct.ToString() +
             "\nstatus: " + status.ToString();
         }

@@ -8,9 +8,9 @@ using Unity.Robotics.ROSTCPConnector.MessageGeneration;
 namespace RosMessageTypes.DeepracerInterfacesPkg
 {
     [Serializable]
-    public class CameraMsgMsg : Message
+    public class CameraMsg : Message
     {
-        public const string k_RosMessageName = "deepracer_interfaces_pkg/CameraMsg";
+        public const string k_RosMessageName = "deepracer_interfaces_pkg/Camera";
         public override string RosMessageName => k_RosMessageName;
 
         //  Custom message to hold the list of Image objects from the
@@ -21,19 +21,19 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
         public Sensor.ImageMsg[] images;
         //  Image data read from cameras.
 
-        public CameraMsgMsg()
+        public CameraMsg()
         {
             this.images = new Sensor.ImageMsg[0];
         }
 
-        public CameraMsgMsg(Sensor.ImageMsg[] images)
+        public CameraMsg(Sensor.ImageMsg[] images)
         {
             this.images = images;
         }
 
-        public static CameraMsgMsg Deserialize(MessageDeserializer deserializer) => new CameraMsgMsg(deserializer);
+        public static CameraMsg Deserialize(MessageDeserializer deserializer) => new CameraMsg(deserializer);
 
-        private CameraMsgMsg(MessageDeserializer deserializer)
+        private CameraMsg(MessageDeserializer deserializer)
         {
             deserializer.Read(out this.images, Sensor.ImageMsg.Deserialize, deserializer.ReadLength());
         }
@@ -46,7 +46,7 @@ namespace RosMessageTypes.DeepracerInterfacesPkg
 
         public override string ToString()
         {
-            return "CameraMsgMsg: " +
+            return "CameraMsg: " +
             "\nimages: " + System.String.Join(", ", images.ToList());
         }
 
