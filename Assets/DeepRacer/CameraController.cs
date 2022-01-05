@@ -6,9 +6,9 @@ using RosMessageTypes.DeepracerInterfacesPkg;
 // Currently only has support for a single camera - donations of code or camera are welcome!
 public class CameraController : MonoBehaviour
 {
-    ROSConnection ros;
     public RawImage cameraImage;
 
+    private ROSConnection ros;
     private string mediaStateService = "camera_pkg/media_state";
     private string cameraTopic = "camera_pkg/video_mjpeg";
 
@@ -59,8 +59,8 @@ public class CameraController : MonoBehaviour
             for (int x = 0; x < image.width; x++)
             {
                 targetData[targetIndex++] = image.data[sourceIndex++]; // Blue
-                targetData[targetIndex++] = image.data[sourceIndex++]; // Red
                 targetData[targetIndex++] = image.data[sourceIndex++]; // Green
+                targetData[targetIndex++] = image.data[sourceIndex++]; // Red
                 targetData[targetIndex++] = 255; // Alpha
             }
         }
