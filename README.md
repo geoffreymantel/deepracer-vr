@@ -12,7 +12,7 @@ Unity-based Oculus VR interface to AWS DeepRacer
 4. Make an `src` directory, and switch to it. Clone the ROS2 branch of the TCP endpoint project into the workspace:
 
    ```
-   git clone https://github.com/Unity-Technologies/ROS-TCP-Endpoint.git -b ROS2
+   git clone https://github.com/Unity-Technologies/ROS-TCP-Endpoint.git -b main-ros2
    ```
 
 5. Build the package: `colcon build`.
