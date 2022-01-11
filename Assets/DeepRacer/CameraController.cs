@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Robotics.ROSTCPConnector;
 using RosMessageTypes.DeepracerInterfacesPkg;
+using RosMessageTypes.Sensor;
 
 // Currently only has support for a single camera - donations of code or camera are welcome!
 public class CameraController : MonoBehaviour
@@ -43,7 +44,7 @@ public class CameraController : MonoBehaviour
 
     private void CameraTopicCallback(CameraMsgMsg cameraMsg)
     {
-        RosMessageTypes.Sensor.ImageMsg image = cameraMsg.images[0];
+        ImageMsg image = cameraMsg.images[0];
 
         // Create the texture if it doesn't already exist
         if (cameraImage.texture == null) {

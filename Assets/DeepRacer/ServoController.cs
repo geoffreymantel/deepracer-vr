@@ -9,8 +9,9 @@ public class ServoController : MonoBehaviour
     private string vehicleStateService = "ctrl_pkg/vehicle_state";
     private string enableStateService = "ctrl_pkg/enable_state";
 
-    public float publishFrequency = 0.5f;
+    public float publishFrequency = 0.1f;
     private float timeElapsed = 0.0f;
+    private bool enableVehicle = false;
 
     // Enums from https://github.com/aws-deepracer/aws-deepracer-ctrl-pkg/blob/main/ctrl_pkg/src/ctrl_node.cpp
     enum CtrState
@@ -35,8 +36,9 @@ public class ServoController : MonoBehaviour
         ActiveStateSrvRequest vehicleStateSrvRequest = new ActiveStateSrvRequest((sbyte)CtrState.manual);
         ros.SendServiceMessage<ActiveStateSrvResponse>(vehicleStateService, vehicleStateSrvRequest);
 
-        // Enable the current vehicle mode
-        EnableStateSrvRequest enableStateSrvRequest = new EnableStateSrvRequest(true);
+        // Enable vehicle throttle
+        enableVehicle = true;
+        EnableStateSrvRequest enableStateSrvRequest = new EnableStateSrvRequest(enableVehicle);
         ros.SendServiceMessage<EnableStateSrvResponse>(enableStateService, enableStateSrvRequest);
     }
 
@@ -49,15 +51,24 @@ public class ServoController : MonoBehaviour
 
     void Update()
     {
-        timeElapsed += Time.deltaTime;
+        OVRInput.Update();
 
+        // Enable/disable the vehicle
+        if ( OVRInput.GetDown(OVRInput.Button.One) )
+        {
+            enableVehicle = !enableVehicle;
+            EnableStateSrvRequest enableStateSrvRequest = new EnableStateSrvRequest(enableVehicle);
+            ros.SendServiceMessage<EnableStateSrvResponse>(enableStateService, enableStateSrvRequest);
+        }
+
+        // Update the throttle every 1/10th of a second
+        timeElapsed += Time.deltaTime;
         if (timeElapsed >= publishFrequency)
         {
-            // Luckily, both the OVR thumbstick and the DeepRacer servo control use float values of [-1, 1]
-            Vector2 thumbstickInput = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
-            Debug.Log("Thumbstick input: x=" + thumbstickInput.x + ", y=" + thumbstickInput.y);
-            ServoCtrlMsgMsg servoCtrlMsg = new ServoCtrlMsgMsg(thumbstickInput.y, thumbstickInput.x);
-            //ServoCtrlMsgMsg servoCtrlMsg = new ServoCtrlMsgMsg(thumbstickInput.y, 0.8f);
+            // Steering and throttle with right controller
+            // Oculus coordinates seem reversed, though this might also mean calibration issues on my DeepRacer
+            Vector2 thumbstickInput = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
+            ServoCtrlMsgMsg servoCtrlMsg = new ServoCtrlMsgMsg(-thumbstickInput.x, -thumbstickInput.y);
             ros.Publish(manualDriveTopic, servoCtrlMsg);
 
             timeElapsed = 0.0f;
